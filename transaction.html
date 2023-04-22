@@ -50,7 +50,7 @@
                 <div class="col col-sm-10">
                     <nav class="navbar bg-primary">
                       <a class="navbar-brand text-white" style="padding-left: 1%;">Medizone</a>
-                      <a class="navbar-brand text-white" href="index.html">Logout</a>
+                      <button class="btn btn-primary" id="logoutButton">Logout</button>
                     </nav>
                     <div class="container-fluid" style="padding-top: 1%;">
                         <div class="row">
@@ -128,5 +128,36 @@
                 </div>
             </div>
         </div>
+        <script type="module">
+                    // Import the functions you need from the SDKs you need
+          import { initializeApp } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js";
+          import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-auth.js";
+          // TODO: Add SDKs for Firebase products that you want to use
+          // https://firebase.google.com/docs/web/setup#available-libraries
+
+          // Your web app's Firebase configuration
+          const firebaseConfig = {
+            apiKey: "AIzaSyBa8lhp0n83wZD09bitPlvr0ByZykPpv7E",
+            authDomain: "mmedizone-436ee.firebaseapp.com",
+            projectId: "mmedizone-436ee",
+            storageBucket: "mmedizone-436ee.appspot.com",
+            messagingSenderId: "514581965020",
+            appId: "1:514581965020:web:d5a00069090b2576afac19"
+          };
+
+          // Initialize Firebase
+          const app = initializeApp(firebaseConfig);
+          const auth = getAuth();
+
+          document.getElementById("logoutButton").addEventListener("click",function(){
+            signOut(auth).then(() => {
+              // Sign-out successful.
+                window.location.href = 'index.html';
+              }).catch((error) => {
+              // An error happened.
+                  alert('Logout error, please refresh')
+              });
+          })
+        </script>
   </body>
 </html>
