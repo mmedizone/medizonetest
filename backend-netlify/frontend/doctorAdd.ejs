@@ -36,7 +36,7 @@
                           </li>
                           <li>
                             <form action="/doctor" method="get">
-                              <button class="nav-link text-white active" aria-current="page">
+                              <button class="nav-link text-white" aria-current="page">
                                 Doctors
                               </button>
                             </form>
@@ -72,19 +72,22 @@
                             </div>
                             <div class="card-body">
                               <form action="/doctorAdd" method="POST" >
-                                <div class="input-group mb-12">
-                                    <input type="text" class="form-control" placeholder="Category Name" aria-label="Category Name" aria-describedby="basic-addon1" id="cat" name="cat">
+                                <div class="input-group mb-4">
+                                    <input type="text" class="form-control" placeholder="Doctor Name" aria-label="Doctor Name" aria-describedby="basic-addon1" id="docName" name="docName">
                                 </div>
-                                <button class="btn btn-primary">Add Doctor </button>
+                                <div class="input-group mb-4">
+                                  <select name="docCat" id="docCat">
+                                    <% catArr.forEach(function(eachPerson){ %>
+                                      <option name="<%= eachPerson %>"><%= eachPerson %></option>
+                                    <% }) %>
+                                  </select>
+                                </div>
+                                <div class="input-group mb-4">
+                                  <input type="number" class="form-control" placeholder="Doctor Price" aria-label="Doctor Price" aria-describedby="basic-addon1" id="docPrice" name="docPrice">
+                                </div>
+                                <button class="btn btn-primary" style="margin-top:20px;">Add Doctor</button>
                             </form>
                             </div>
-                            <nav style="padding-left: 2%;">
-                                <ul class="pagination">
-                                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                </ul>
-                            </nav>
                           </div>
                         </div>
                     </div>

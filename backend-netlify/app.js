@@ -131,6 +131,30 @@ app.get('/doctor', async (req, res)=>{
     res.render('doctor',{docArr:arr})
 });
 
+app.get('/doctorAdd', async (req, res)=>{
+    res.status(200);
+
+    const arr = []
+
+    const querySnapshot = await getDocs(collection(db, "category"));
+    querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+        arr.push(doc.id)
+    });
+
+    res.render('doctorAdd', {catArr:arr})
+});
+
+app.post('/doctorAdd',async (req, res)=>{
+    res.status(200);
+
+    const { docName, docCat, docPrice } = req.body;
+
+    await setDoc(doc(db, "doctors", docName), {category: docCat, price: docPrice});
+
+    res.redirect('/doctor')
+});
+
 app.get('/transaction', (req, res)=>{
     res.status(200);
     res.render('transaction')
