@@ -5,8 +5,8 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { initializeApp } from 'firebase-admin/app';
-import { getAuth, signOut, onAuthStateChanged  } from "firebase/auth"; 
-import { collection, getDocs } from "firebase/firestore";
+import { getAuth  } from "firebase/auth"; 
+import { collection, getDocs, setDoc, doc } from "firebase/firestore";
 
 
 const app = express();
@@ -86,6 +86,22 @@ app.get('/category', async (req, res)=>{
     res.render('category',{catArr:arr})
 });
 
+
+app.get('/categoryAdd', (req, res)=>{
+    res.status(200);
+    res.render('categoryAdd')
+});
+
+app.post('/categoryAdd',async (req, res)=>{
+    res.status(200);
+
+    const { cat } = req.body;
+
+    await setDoc(doc(db, "category", cat), {});
+
+    res.redirect('/category')
+});
+
 app.get('/dashboard', (req, res)=>{
     res.status(200);
     var displayName = "admin"
@@ -95,9 +111,6 @@ app.get('/dashboard', (req, res)=>{
 
     if(user) {
         displayName = user.displayName
-    }
-    else{
-
     }
 
 
