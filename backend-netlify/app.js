@@ -191,8 +191,9 @@ app.listen(PORT, (error) =>{
     else 
         console.log("Error occurred, server can't start", error);
     }
-);
+);  
 
-const serverless = serverless(app)
+export {auth,db}
 
-export {auth,db, serverless}
+module.exports = app;
+module.exports.handler = serverless(app);
