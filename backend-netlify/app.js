@@ -4,7 +4,10 @@ import { fileURLToPath } from 'url';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import { initializeApp } from 'firebase-admin/app';
 import { getAuth, signOut, onAuthStateChanged  } from "firebase/auth"; 
+import { collection, getDocs } from "firebase/firestore";
+
 
 const app = express();
 app.use(express.json());
@@ -32,10 +35,9 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.firestore();
 const auth = firebase.auth()
 
-export {auth,db}
+const firebaseAdmin = initializeApp();
 
-const authData = getAuth();
-const user = authData.currentUser;
+export {auth,db}
 
 app.get('/', (req, res)=>{
     res.status(200);
@@ -70,24 +72,35 @@ app.post('/logout', async(req,res)=>{
 });
 
 
-app.get('/category', (req, res)=>{
+app.get('/category', async (req, res)=>{
     res.status(200);
-    res.render('category')
+
+    const arr = []
+
+    const querySnapshot = await getDocs(collection(db, "category"));
+    querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id);
+        arr.push(doc.id)
+    });
+
+    res.render('category',{catArr:arr})
 });
 
 app.get('/dashboard', (req, res)=>{
     res.status(200);
     var displayName = "admin"
 
-    onAuthStateChanged(authData, (user) => {
-        if (user) {
-            var displayName = user.displayName
-          // ...
-        } else {
-          // User is signed out
-          // ...
-        }
-      });
+    const authData = getAuth();
+    const user = authData.currentUser;
+
+    if(user) {
+        displayName = user.displayName
+    }
+    else{
+
+    }
+
 
     res.render('dashboard',{userName:displayName})
 });
@@ -103,6 +116,7 @@ app.get('/transaction', (req, res)=>{
 });
 
 app.get('/users', (req, res)=>{
+    
     res.status(200);
     res.render('users')
 });
