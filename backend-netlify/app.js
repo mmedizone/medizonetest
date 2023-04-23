@@ -7,8 +7,6 @@ import 'firebase/compat/firestore';
 import { initializeApp } from 'firebase-admin/app';
 import { getAuth  } from "firebase/auth"; 
 import { collection, getDocs, setDoc, doc, deleteDoc } from "firebase/firestore";
-import 'serverless-http';
-
 
 const app = express();
 app.use(express.json());
@@ -194,6 +192,3 @@ app.listen(PORT, (error) =>{
 );  
 
 export {auth,db}
-
-module.exports = app;
-module.exports.handler = serverless(app);
