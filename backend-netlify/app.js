@@ -4,11 +4,18 @@ import { fileURLToPath } from 'url';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import { getAuth, signOut } from "firebase/auth"; 
+import { getAuth, signOut, onAuthStateChanged  } from "firebase/auth"; 
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/frontend'));
+// app.use(express.static(path.join(__dirname, 'frontend')));
 
 const PORT = 3000;
 
@@ -27,13 +34,13 @@ const auth = firebase.auth()
 
 export {auth,db}
 
-const __filename = fileURLToPath(import.meta.url);
-
-const __dirname = path.dirname(__filename);
+const authData = getAuth();
+const user = authData.currentUser;
 
 app.get('/', (req, res)=>{
     res.status(200);
-    res.sendFile(path.join(__dirname, 'frontend/index.html'));
+    // res.sendFile(path.join(__dirname, 'frontend/index.html'));
+    res.render('index')
 });
 
 app.post('/login', async(req,res)=>{
@@ -42,9 +49,10 @@ app.post('/login', async(req,res)=>{
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then(function(user) { res.redirect('/dashboard'); })
         .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorMessage)
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorMessage)
+            res.redirect('/')
         });
 });
 
@@ -64,27 +72,39 @@ app.post('/logout', async(req,res)=>{
 
 app.get('/category', (req, res)=>{
     res.status(200);
-    res.sendFile(path.join(__dirname, 'frontend/category.html'));
+    res.render('category')
 });
 
 app.get('/dashboard', (req, res)=>{
     res.status(200);
-    res.sendFile(path.join(__dirname, 'frontend/dashboard.html'));
+    var displayName = "admin"
+
+    onAuthStateChanged(authData, (user) => {
+        if (user) {
+            var displayName = user.displayName
+          // ...
+        } else {
+          // User is signed out
+          // ...
+        }
+      });
+
+    res.render('dashboard',{userName:displayName})
 });
 
 app.get('/doctor', (req, res)=>{
     res.status(200);
-    res.sendFile(path.join(__dirname, 'frontend/doctor.html'));
+    res.render('doctor')
 });
 
 app.get('/transaction', (req, res)=>{
     res.status(200);
-    res.sendFile(path.join(__dirname, 'frontend/transaction.html'));
+    res.render('transaction')
 });
 
 app.get('/users', (req, res)=>{
     res.status(200);
-    res.sendFile(path.join(__dirname, 'frontend/users.html'));
+    res.render('users')
 });
   
 app.listen(PORT, (error) =>{
