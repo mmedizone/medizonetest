@@ -7,6 +7,7 @@ import 'firebase/compat/firestore';
 import { initializeApp } from 'firebase-admin/app';
 import { getAuth  } from "firebase/auth"; 
 import { collection, getDocs, setDoc, doc, deleteDoc } from "firebase/firestore";
+import 'serverless-http';
 
 
 const app = express();
@@ -34,10 +35,6 @@ var firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.firestore();
 const auth = firebase.auth()
-
-const firebaseAdmin = initializeApp();
-
-export {auth,db}
 
 app.get('/', (req, res)=>{
     res.status(200);
@@ -195,3 +192,7 @@ app.listen(PORT, (error) =>{
         console.log("Error occurred, server can't start", error);
     }
 );
+
+const serverless = serverless(app)
+
+export {auth,db, serverless}
