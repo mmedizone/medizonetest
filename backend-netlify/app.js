@@ -165,6 +165,18 @@ app.post('/doctorAdd',async (req, res)=>{
     res.redirect('/doctor')
 });
 
+app.post('/doctorDel',async (req, res)=>{
+    res.status(200);
+
+    const selected = req.body.sel;
+
+    console.log(selected)
+
+    await deleteDoc(doc(db, "doctors", selected[0]));
+
+    res.redirect('/doctor')
+});
+
 app.get('/transaction', (req, res)=>{
     res.status(200);
     res.render('transaction')

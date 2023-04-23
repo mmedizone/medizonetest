@@ -92,7 +92,9 @@
                                         <td> <%= eachPerson.name %> </td>
                                         <td> <%= eachPerson.price %> </td>
                                         <td> 
-                                          <button class="btn btn-secondary">Delete</button>
+                                          <form action="/doctorDel" method="post">
+                                            <button class="btn btn-secondary" name="sel[]" value="<%= eachPerson.name %>">Delete</button>
+                                          </form>
                                         </td>
                                       </tr>
                                       <% i++ %>
