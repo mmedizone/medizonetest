@@ -6,7 +6,7 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { initializeApp } from 'firebase-admin/app';
 import { getAuth  } from "firebase/auth"; 
-import { collection, getDocs, setDoc, doc } from "firebase/firestore";
+import { collection, getDocs, setDoc, doc, deleteDoc } from "firebase/firestore";
 
 
 const app = express();
@@ -98,6 +98,16 @@ app.post('/categoryAdd',async (req, res)=>{
     const { cat } = req.body;
 
     await setDoc(doc(db, "category", cat), {});
+
+    res.redirect('/category')
+});
+
+app.post('/categoryDel',async (req, res)=>{
+    res.status(200);
+
+    const selected = req.body.sel;
+
+    await deleteDoc(doc(db, "category", selected[0]));
 
     res.redirect('/category')
 });

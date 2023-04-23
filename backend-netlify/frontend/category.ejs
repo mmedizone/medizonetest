@@ -62,7 +62,7 @@
                     <div class="container-fluid" style="padding-top: 1%;">
                         <div class="row">
                           <div class="col-xl-12 col-md-6 mb-4" style="background-color:#e9ecef;padding:2%">
-                            <h1 class="display-5">Category</h1>
+                            <h1 class="display-5" name="">Category</h1>
                           </div>
                         </div>
                         <div class="container-fluid">
@@ -88,7 +88,9 @@
                                           <td> <%= i %> </td>
                                           <td> <%= eachPerson %> </td>
                                           <td> 
-                                            <button class="btn btn-secondary">Delete</button>
+                                            <form action="/categoryDel" method="post">
+                                              <button class="btn btn-secondary" name="sel[]" value="<%= eachPerson %>">Delete</button>
+                                            </form>
                                           </td>
                                         </tr>
                                         <% i++ %>
@@ -96,49 +98,11 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <nav style="padding-left: 2%;">
-                                <ul class="pagination">
-                                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                </ul>
-                            </nav>
                           </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <script type="module">
-                  // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js";
-        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-auth.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-          apiKey: "AIzaSyBa8lhp0n83wZD09bitPlvr0ByZykPpv7E",
-          authDomain: "mmedizone-436ee.firebaseapp.com",
-          projectId: "mmedizone-436ee",
-          storageBucket: "mmedizone-436ee.appspot.com",
-          messagingSenderId: "514581965020",
-          appId: "1:514581965020:web:d5a00069090b2576afac19"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth();
-
-        document.getElementById("logoutButton").addEventListener("click",function(){
-          signOut(auth).then(() => {
-            // Sign-out successful.
-              window.location.href = 'index.html';
-            }).catch((error) => {
-            // An error happened.
-                alert('Logout error, please refresh')
-            });
-        })
-        </script>
   </body>
 </html>
