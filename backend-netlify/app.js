@@ -80,7 +80,6 @@ app.get('/category', async (req, res)=>{
     const querySnapshot = await getDocs(collection(db, "category"));
     querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id);
         arr.push(doc.id)
     });
 
@@ -105,9 +104,18 @@ app.get('/dashboard', (req, res)=>{
     res.render('dashboard',{userName:displayName})
 });
 
-app.get('/doctor', (req, res)=>{
+app.get('/doctor', async (req, res)=>{
     res.status(200);
-    res.render('doctor')
+
+    const arr = []
+
+    const querySnapshot = await getDocs(collection(db, "doctors"));
+    querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+        arr.push({name: doc.id, cat: doc.data().category, price: doc.data().price})
+    });
+
+    res.render('doctor',{docArr:arr})
 });
 
 app.get('/transaction', (req, res)=>{
