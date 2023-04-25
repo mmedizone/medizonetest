@@ -77,58 +77,33 @@
                                             <th>No</th>
                                             <th>Date</th>
                                             <th>Time</th>
-                                            <th>Users</th>
-                                            <th>Category</th>
+                                            <th>Patient</th>
                                             <th>Doctor</th>
-                                            <th>Price</th>
-                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>09 Maret 2023</td>
-                                            <td>07:15:30</td>
-                                            <td>Ronaldo</td>
-                                            <td>Orthopedic</td>
-                                            <td>Dr. Ahmad Jufrianto</td>
-                                            <td>$35</td>
-                                            <td>Booked</td>
-                                            <td> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>03 Januari 2023</td>
-                                            <td>07:15:30</td>
-                                            <td>Ebs</td>
-                                            <td>Orthopedic</td>
-                                            <td>Dr. Ahmad Jufrianto</td>
-                                            <td>$35</td>
-                                            <td>Booked</td>
-                                            <td> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>03 Januari 2023</td>
-                                            <td>07:15:30</td>
-                                            <td>Neymar</td>
-                                            <td>Orthopedic</td>
-                                            <td>Dr. Ahmad Jufrianto</td>
-                                            <td>$35</td>
-                                            <td>Booked</td>
-                                            <td> </td>
-                                        </tr>
+                                        <% i = 1 %>
+                                        <% arr.forEach(function(eachPerson){ %>
+                                          <tr>
+                                            <th><%= i %></th>
+                                            <th><%= eachPerson[1] %></th>
+                                            <th><%= eachPerson[2] %></th>
+                                            <th><%= eachPerson[3] %></th>
+                                            <th><%= eachPerson[4] %></th>
+                                            <td> 
+                                              <form action="/categoryDel" method="post">
+                                                <button class="btn btn-secondary" name="sel[]" value="<%= eachPerson[5] %>">Delete</button>
+                                              </form>
+                                            </td>
+                                          </tr>
+                                        <% i++ %>
+                                        <% }) %>
+                                      
+                                        
                                     </tbody>
                                 </table>
                             </div>
-                            <nav style="padding-left: 2%;">
-                                <ul class="pagination">
-                                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                </ul>
-                            </nav>
                           </div>
                         </div>
                     </div>

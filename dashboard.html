@@ -121,7 +121,7 @@
 
         onAuthStateChanged(auth, (user) => {
           if (user) {
-            document.getElementById("sayHi").innerHTML = "Welcome, "+ user.displayName
+            document.getElementById("sayHi").innerHTML = "Welcome, "+ user.email
             
           } else {
             
